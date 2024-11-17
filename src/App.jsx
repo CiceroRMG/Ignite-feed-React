@@ -4,6 +4,41 @@ import styles from './App.module.css'
 import { Sidebar } from "./components/sidebar/Sidebar";
 import { Post } from "./components/post/Post";
 
+const posts = [
+  {
+    id: 1,
+    author: {
+      name: "Cícero Gomes",
+      role: "CTO Beans",
+      avatarUrl: "https://github.com/ciceroRMG.png"
+    },
+    contents: [
+      {type: "paragraph", content: "Aqui o conteúdo primário"},
+      {type: "paragraph", content: "Aqui o conteúdo secundário"},
+      {type: "link", content: "google.dev/forms"}
+    ],
+    postedAt: {
+      date: new Date('2024-11-17 10:30:00 ')
+    }
+  },
+  {
+    id: 2,
+    author: {
+      name: "Google",
+      role: "CTO Google",
+      avatarUrl: "https://github.com/google.png"
+    },
+    contents: [
+      {type: "paragraph", content: "Aqui o conteúdo primário"},
+      {type: "paragraph", content: "Aqui o conteúdo secundário"},
+      {type: "link", content: "#beans"}
+    ],
+    postedAt: {
+      date: new Date('2024-11-16 10:30:00 ')
+    }
+  }
+]
+
 export function App() {
 
   return (
@@ -12,8 +47,17 @@ export function App() {
 
       <div className={styles.wrapper}>
         <Sidebar />
-        <Post />
-
+        <main>
+          {posts.map((post) => {
+            return (
+              <Post 
+                author={post.author}
+                contents={post.contents}
+                postedAt={post.postedAt}
+              />
+            )
+          })}
+        </main>
       </div>
     </>
   )
