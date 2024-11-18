@@ -19,7 +19,7 @@ export function Post({ author, contents, postedAt }) {
 
     const [newCommentText, setNewCommentText] = useState('')
 
-    function handleCreateNewComment() {
+    function handleCreateNewComment(event) {
         event.preventDefault()
 
         setComments([...comments, newCommentText])
@@ -27,7 +27,8 @@ export function Post({ author, contents, postedAt }) {
         setNewCommentText('')
     }
 
-    function handleNewCommentText() {
+    function handleNewCommentText(event) {
+        event.target.setCustomValidity('')
         setNewCommentText(event.target.value)
     }
 
@@ -38,6 +39,12 @@ export function Post({ author, contents, postedAt }) {
         
         setComments(commentsWithoutDeletedOne)
     }
+
+    function handleNewCommentInvalid(event){
+        event.target.setCustomValidity('O campo esta vazio, informe um valor!')
+    }
+
+    const emptyNewCommentText = newCommentText.length === 0
 
     return (
         <article className={styles.post}>
@@ -71,11 +78,13 @@ export function Post({ author, contents, postedAt }) {
                 <textarea 
                     placeholder='Deixe um comentário'
                     onChange={handleNewCommentText}
-                    value={newCommentText} 
+                    value={newCommentText}
+                    onInvalid={handleNewCommentInvalid}
+                    required 
                 />
 
                 <footer>
-                    <button type='submit'>Publicar</button>
+                    <button type='submit' disabled={emptyNewCommentText}>Publicar</button>
                 </footer>
             </form>
 
